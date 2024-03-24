@@ -3,11 +3,11 @@
    #include"lcd_fun.c"
    //#include"potentio.c"
 
-   #define ROWS (0X0F<<21)
-   #define COLS (0X0F<<17)
+   #define ROWS 
+   #define COLS 
 
    unsigned int new;
-   unsigned int Current_position=0, Next_position=0,LED=17; 
+   unsigned int Current_position=0, Next_position=0; 
    int diffrence=0;
    unsigned int old=0X0E;
    unsigned int value;
@@ -20,16 +20,7 @@
 
    int main()
    {
-   IODIR0=(1<<11);//buzzer
-   IODIR0=(1<<18);
-   IODIR0=(1<<19);
-   IODIR0=(1<<20);
-   IODIR0=(1<<17);
-   IOCLR0=(1<<18);
-   IOCLR0=(1<<19);
-   IOCLR0=(1<<20);
-   IOCLR0=(1<<17);
-
+   //define gpio pins
    PINSEL1=(1<<22);
    PINSEL1&=~(1<<23);
 
@@ -48,7 +39,7 @@
    IODIR1=ROWS;
    IODIR1&=~(COLS);
    val=(IOPIN1&COLS);
-   val=val>>17;
+  
     
    switch(val)
    {
@@ -68,7 +59,7 @@
   IODIR1=COLS;
   IODIR1&=~(ROWS);
   val=(IOPIN1&ROWS);
-  val=val>>21;
+ 
 
 
   
@@ -111,23 +102,16 @@
         {
             diffrence=diffrence*(-1);
         }
-		IOCLR0|=(1<<18)|(1<<19)|(1<<20)|(1<<17);
-		IOSET0=(1<<LED);
+		
 
        for(i=0;i<diffrence;i++)
 	   {
-	   		    IOSET0=(1<<LED);
-				delay(2000);
-				IOCLR0=(1<<LED);
-				delay(2000);
-             
+	   		   
 			LED++;
-			lcd_num(LED);
+			
 			Current_position++;
   		}
-		IOCLR0|=(1<<18)|(1<<19)|(1<<20)|(1<<17);
-		IOSET0=(1<<LED);
-		delay(3000);
+		
 		//lcd_cmd(0XC0);
 		lcd_str("OPEN");
 		
@@ -166,17 +150,11 @@
         	{
             diffrence=diffrence*(-1);									   
         	}
-			 IOCLR0|=(1<<18)|(1<<19)|(1<<20)|(1<<17);
-			 IOSET0=(1<<LED);
-	
 	
        		for(j=0;j<diffrence;j++)
             {
 			
-				IOSET0=(1<<LED);
-				delay(2000);
-				IOCLR0=(1<<LED);
-				delay(2000);
+				
 				LED--;
 				lcd_num(LED);
 				Current_position--;
